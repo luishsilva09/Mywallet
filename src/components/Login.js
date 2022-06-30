@@ -2,17 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Home from "./Home";
 
 export default function Login() {
   const navigate = useNavigate();
   const [login, setLogin] = React.useState({
     email: "",
-    senha: "",
+    password: "",
   });
 
   function logar(event) {
     event.preventDefault();
-    navigate("/");
+    const promise = axios.post("http://localhost:5001/login", login);
+    promise.then((req, res) => {
+      console.log("entrou");
+      return <Home />;
+    });
   }
   return (
     <Container>
@@ -28,7 +34,7 @@ export default function Login() {
           type="password"
           placeholder="Senha"
           value={login.senha}
-          onChange={(e) => setLogin({ ...login, senha: e.target.value })}
+          onChange={(e) => setLogin({ ...login, password: e.target.value })}
         ></input>
         <button type="submit">
           <p>Entrar</p>

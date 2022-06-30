@@ -2,19 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Cadastro() {
   const navigate = useNavigate();
   const [cadastro, setCadastro] = React.useState({
-    nome: "",
+    name: "",
     email: "",
-    senha: "",
-    confirmeSenha: "",
+    password: "",
+    repeat_password: "",
   });
 
   function cadastrar(event) {
     event.preventDefault();
-    navigate("/");
+    console.log("oii");
+    const promise = axios.post("http://localhost:5001/cadastro", cadastro);
+    promise.then((req, res) => {
+      console.log(res);
+      navigate("/login");
+    });
   }
   return (
     <Container>
@@ -23,8 +29,8 @@ export default function Cadastro() {
         <input
           type="text"
           placeholder="Nome"
-          value={cadastro.nome}
-          onChange={(e) => setCadastro({ ...cadastro, nome: e.target.value })}
+          value={cadastro.name}
+          onChange={(e) => setCadastro({ ...cadastro, name: e.target.value })}
         ></input>
         <input
           type="email"
@@ -35,15 +41,17 @@ export default function Cadastro() {
         <input
           type="password"
           placeholder="Senha"
-          value={cadastro.senha}
-          onChange={(e) => setCadastro({ ...cadastro, senha: e.target.value })}
+          value={cadastro.password}
+          onChange={(e) =>
+            setCadastro({ ...cadastro, password: e.target.value })
+          }
         ></input>
         <input
           type="password"
           placeholder="Confirme a senha"
-          value={cadastro.confirmeSenha}
+          value={cadastro.repeat_password}
           onChange={(e) =>
-            setCadastro({ ...cadastro, confirmeSenha: e.target.value })
+            setCadastro({ ...cadastro, repeat_password: e.target.value })
           }
         ></input>
         <button type="submit">
