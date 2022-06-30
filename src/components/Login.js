@@ -3,10 +3,11 @@ import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Home from "./Home";
+import UserContext from "../context/UserContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setUserData } = React.useContext(UserContext);
   const [login, setLogin] = React.useState({
     email: "",
     password: "",
@@ -14,10 +15,10 @@ export default function Login() {
 
   function logar(event) {
     event.preventDefault();
-    const promise = axios.post("http://localhost:5001/login", login);
-    promise.then((req, res) => {
-      console.log("entrou");
-      return <Home />;
+    const promise = axios.post("http://localhost:5000/login", login);
+    promise.then((res) => {
+      setUserData(res.data);
+      navigate("/");
     });
   }
   return (

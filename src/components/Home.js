@@ -4,18 +4,26 @@ import Extrato from "./Extrato";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
+import UserContext from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const { userData } = React.useContext(UserContext);
+  function entrada() {
+    console.log("oii");
+    navigate("/entrada");
+  }
   return (
     <Container>
       <Topo>
-        <p>Ola, Fulano</p>
+        <p>Ola, {userData.usuario.name}</p>
         <IoExitOutline />
       </Topo>
       <Extrato />
 
       <Botton>
-        <Adicionar>
+        <Adicionar onClick={() => entrada()}>
           <AiOutlinePlusCircle size={20} color="#fff" />
           <h2>
             Nova <br /> entrada

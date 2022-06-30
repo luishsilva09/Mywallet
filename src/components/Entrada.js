@@ -1,17 +1,44 @@
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../context/UserContext";
+import dayjs from "dayjs";
 
 export default function Entrada() {
+  const now = dayjs().format("DD/MM");
+  const navigate = useNavigate();
   const [entrada, setEntrada] = React.useState({
+    data: now,
     valor: "",
     descricao: "",
+    type: "entrada",
   });
+  const { userData } = React.useContext(UserContext);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
+  function novaEntrada(event) {
+    event.preventDefault();
+    const promise = axios.post(
+      "http://localhost:5000/entrada",
+      entrada,
+      config
+    );
+    promise.then((res) => {
+      navigate("/");
+    });
+  }
+
   return (
     <Container>
       <Topo>
         <p>Nova entrada</p>
       </Topo>
-      <Form>
+      <Form onSubmit={(event) => novaEntrada(event)}>
         <input
           type="number"
           value={entrada.valor}

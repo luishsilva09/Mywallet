@@ -6,18 +6,22 @@ import Cadastro from "./Cadastro";
 import Entrada from "./Entrada";
 import Saida from "./Saida";
 import GlobalStyle from "./globalStyles";
+import UserContext from "../context/UserContext";
 
 export default function App() {
+  const [userData, setUserData] = React.useState();
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/saida" element={<Saida />} />
-        <Route path="/entrada" element={<Entrada />} />
-      </Routes>
-    </BrowserRouter>
+    <UserContext.Provider value={{ userData, setUserData }}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/saida" element={<Saida />} />
+          <Route path="/entrada" element={<Entrada />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }

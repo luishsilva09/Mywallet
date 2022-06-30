@@ -16,7 +16,7 @@ export default function Cadastro() {
   function cadastrar(event) {
     event.preventDefault();
     console.log("oii");
-    const promise = axios.post("http://localhost:5001/cadastro", cadastro);
+    const promise = axios.post("http://localhost:5000/cadastro", cadastro);
     promise.then((req, res) => {
       console.log(res);
       navigate("/login");
