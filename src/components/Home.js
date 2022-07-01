@@ -20,7 +20,7 @@ export default function Home() {
     <Container>
       <Topo>
         <p>Ola, {userData.usuario.name}</p>
-        <IoExitOutline onClick={() => navigate("/login")} />
+        <IoExitOutline onClick={() => navigate("/")} />
       </Topo>
       <Extrato />
 

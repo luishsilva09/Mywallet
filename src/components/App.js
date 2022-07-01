@@ -15,7 +15,7 @@ export default function App() {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/saida" element={<Saida />} />

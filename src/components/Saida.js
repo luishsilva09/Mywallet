@@ -38,7 +38,9 @@ export default function Saida() {
           type="number"
           value={saida.valor}
           placeholder="Valor"
-          onChange={(e) => setSaida({ ...saida, valor: e.target.value })}
+          onChange={(e) =>
+            setSaida({ ...saida, valor: parseInt(e.target.value) })
+          }
         ></input>
         <input
           type="text"

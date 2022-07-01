@@ -19,7 +19,7 @@ export default function Cadastro() {
     promise
       .then((req, res) => {
         console.log(res);
-        navigate("/login");
+        navigate("/");
       })
       .catch((res) => {
         alert("Preencha corretamente os dados");
@@ -61,7 +61,7 @@ export default function Cadastro() {
           <p>Cadastrar</p>
         </button>
       </Form>
-      <Link to="/login">
+      <Link to="/">
         <p>Já tem uma conta? Entre agora!</p>
       </Link>
     </Container>

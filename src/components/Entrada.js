@@ -43,7 +43,9 @@ export default function Entrada() {
           type="number"
           value={entrada.valor}
           placeholder="Valor"
-          onChange={(e) => setEntrada({ ...entrada, valor: e.target.value })}
+          onChange={(e) =>
+            setEntrada({ ...entrada, valor: parseInt(e.target.value) })
+          }
         ></input>
         <input
           type="text"
