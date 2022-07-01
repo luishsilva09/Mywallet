@@ -16,10 +16,14 @@ export default function Login() {
   function logar(event) {
     event.preventDefault();
     const promise = axios.post("http://localhost:5000/login", login);
-    promise.then((res) => {
-      setUserData(res.data);
-      navigate("/");
-    });
+    promise
+      .then((res) => {
+        setUserData(res.data);
+        navigate("/home");
+      })
+      .catch(() => {
+        alert("senha ou email invalidos");
+      });
   }
   return (
     <Container>
@@ -49,7 +53,7 @@ export default function Login() {
 }
 
 const Container = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

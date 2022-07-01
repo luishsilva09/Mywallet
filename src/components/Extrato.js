@@ -19,7 +19,6 @@ export default function Extrato() {
       setLoad(false);
     });
   }, []);
-
   return (
     <Container>
       {load ? (
@@ -32,7 +31,7 @@ export default function Extrato() {
           <Item>
             <h2>{e.data}</h2>
             <h3>{e.descricao}</h3>
-            <h4 color={e.type}>{e.valor}</h4>
+            <Valor color={e.type}>{e.valor}</Valor>
           </Item>
         ))
       )}
@@ -68,7 +67,7 @@ const Item = styled.div`
   h3 {
     color: #000;
   }
-  h4 {
-    color: ${(props) => (props.color === "entrada" ? "red" : "green")};
-  }
+`;
+const Valor = styled.h4`
+  color: ${(props) => (props.color === "entrada" ? "green" : "red")};
 `;

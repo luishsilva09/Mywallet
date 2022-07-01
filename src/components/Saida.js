@@ -1,17 +1,39 @@
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import UserContext from "../context/UserContext";
+import dayjs from "dayjs";
 
 export default function Saida() {
+  const now = dayjs().format("DD/MM");
+  const navigate = useNavigate();
   const [saida, setSaida] = React.useState({
+    data: now,
     valor: "",
     descricao: "",
+    type: "saida",
   });
+  const { userData } = React.useContext(UserContext);
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${userData.token}`,
+    },
+  };
+  function novaSaida(event) {
+    event.preventDefault();
+    const promise = axios.post("http://localhost:5000/saida", saida, config);
+    promise.then((res) => {
+      navigate("/home");
+    });
+  }
   return (
     <Container>
       <Topo>
         <p>Nova saida</p>
       </Topo>
-      <Form>
+      <Form onSubmit={(event) => novaSaida(event)}>
         <input
           type="number"
           value={saida.valor}

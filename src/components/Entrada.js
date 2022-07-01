@@ -29,7 +29,7 @@ export default function Entrada() {
       config
     );
     promise.then((res) => {
-      navigate("/");
+      navigate("/home");
     });
   }
 

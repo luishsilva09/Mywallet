@@ -11,14 +11,16 @@ export default function Home() {
   const navigate = useNavigate();
   const { userData } = React.useContext(UserContext);
   function entrada() {
-    console.log("oii");
     navigate("/entrada");
+  }
+  function saida() {
+    navigate("/saida");
   }
   return (
     <Container>
       <Topo>
         <p>Ola, {userData.usuario.name}</p>
-        <IoExitOutline />
+        <IoExitOutline onClick={() => navigate("/login")} />
       </Topo>
       <Extrato />
 
@@ -29,7 +31,7 @@ export default function Home() {
             Nova <br /> entrada
           </h2>
         </Adicionar>
-        <Adicionar>
+        <Adicionar onClick={() => saida()}>
           <AiOutlineMinusCircle size={20} color="#fff" />
           <h2>
             Nova <br /> saída

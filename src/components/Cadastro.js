@@ -15,12 +15,15 @@ export default function Cadastro() {
 
   function cadastrar(event) {
     event.preventDefault();
-    console.log("oii");
     const promise = axios.post("http://localhost:5000/cadastro", cadastro);
-    promise.then((req, res) => {
-      console.log(res);
-      navigate("/login");
-    });
+    promise
+      .then((req, res) => {
+        console.log(res);
+        navigate("/login");
+      })
+      .catch((res) => {
+        alert("Preencha corretamente os dados");
+      });
   }
   return (
     <Container>
@@ -66,7 +69,7 @@ export default function Cadastro() {
 }
 
 const Container = styled.div`
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

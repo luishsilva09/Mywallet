@@ -16,7 +16,7 @@ export default function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/saida" element={<Saida />} />
           <Route path="/entrada" element={<Entrada />} />
