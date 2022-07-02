@@ -3,70 +3,85 @@ import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Cadastro() {
   const navigate = useNavigate();
-  const [cadastro, setCadastro] = React.useState({
+  const [load, setLoad] = React.useState(false);
+  const [userData, setUserData] = React.useState({
     name: "",
     email: "",
     password: "",
     repeat_password: "",
   });
 
-  function cadastrar(event) {
+  function createUser(event) {
     event.preventDefault();
-    const promise = axios.post(
-      "https://back-mywallet-driven.herokuapp.com/cadastro",
-      cadastro
-    );
+    setLoad(true);
+    const promise = axios.post("http://localhost:5000/cadastro", userData);
     promise
       .then((req, res) => {
-        console.log(res);
+        setLoad(false);
         navigate("/");
       })
       .catch((res) => {
+        setLoad(false);
         alert("Preencha corretamente os dados");
       });
   }
   return (
     <Container>
-      <img src={Logo} alt="logo mywallet" />
-      <Form onSubmit={(event) => cadastrar(event)}>
-        <input
-          type="text"
-          placeholder="Nome"
-          value={cadastro.name}
-          onChange={(e) => setCadastro({ ...cadastro, name: e.target.value })}
-        ></input>
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={cadastro.email}
-          onChange={(e) => setCadastro({ ...cadastro, email: e.target.value })}
-        ></input>
-        <input
-          type="password"
-          placeholder="Senha"
-          value={cadastro.password}
-          onChange={(e) =>
-            setCadastro({ ...cadastro, password: e.target.value })
-          }
-        ></input>
-        <input
-          type="password"
-          placeholder="Confirme a senha"
-          value={cadastro.repeat_password}
-          onChange={(e) =>
-            setCadastro({ ...cadastro, repeat_password: e.target.value })
-          }
-        ></input>
-        <button type="submit">
-          <p>Cadastrar</p>
-        </button>
-      </Form>
-      <Link to="/">
-        <p>Já tem uma conta? Entre agora!</p>
-      </Link>
+      {load ? (
+        <TailSpin color="#fff" />
+      ) : (
+        <Container>
+          <img src={Logo} alt="logo mywallet" />
+          <Form onSubmit={(event) => createUser(event)}>
+            <input
+              type="text"
+              placeholder="Nome"
+              value={userData.name}
+              disabled={load}
+              onChange={(e) =>
+                setUserData({ ...userData, name: e.target.value })
+              }
+            ></input>
+            <input
+              type="email"
+              placeholder="E-mail"
+              value={userData.email}
+              disabled={load}
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
+            ></input>
+            <input
+              type="password"
+              placeholder="Senha"
+              value={userData.password}
+              disabled={load}
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+            ></input>
+            <input
+              type="password"
+              placeholder="Confirme a senha"
+              value={userData.repeat_password}
+              disabled={load}
+              onChange={(e) =>
+                setUserData({ ...userData, repeat_password: e.target.value })
+              }
+            ></input>
+            <button type="submit">
+              <p>Cadastrar</p>
+            </button>
+          </Form>
+          <Link to="/">
+            <p>Já tem uma conta? Entre agora!</p>
+          </Link>
+        </Container>
+      )}
     </Container>
   );
 }
