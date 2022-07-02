@@ -9,6 +9,7 @@ import { ThreeDots } from "react-loader-spinner";
 export default function Login() {
   const navigate = useNavigate();
   const [load, setLoad] = React.useState(false);
+  const [invalidUser, setInvalidUser] = React.useState(false);
   const { setUserData } = React.useContext(UserContext);
   const [login, setLogin] = React.useState({
     email: "",
@@ -26,9 +27,11 @@ export default function Login() {
         navigate("/home");
       })
       .catch(() => {
-        alert("senha ou email invalidos");
+        setInvalidUser(true);
+        setLoad(false);
       });
   }
+
   return (
     <Container>
       <img src={Logo} alt="logo mywallet" />
@@ -51,6 +54,8 @@ export default function Login() {
           {load ? <ThreeDots color="#fff" /> : <p>Entrar</p>}
         </button>
       </Form>
+      {invalidUser ? <h2>Email ou senha invalidos</h2> : <></>}
+      <br />
       <Link to="/cadastro">
         <p>Primeira vez? Cadastre-se!</p>
       </Link>
@@ -82,6 +87,12 @@ const Container = styled.div`
     height: 50px;
     width: 150px;
     margin-bottom: 25px;
+  }
+  h2 {
+    font-size: 15px;
+    color: #ff0126;
+    font-weight: 500;
+    text-decoration: none;
   }
 `;
 
