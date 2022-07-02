@@ -26,7 +26,13 @@ export default function Cadastro() {
       })
       .catch((res) => {
         setLoad(false);
-        alert("Preencha corretamente os dados");
+        if (res.response.status === 409) {
+          alert("Email já cadastrado");
+        } else {
+          alert(
+            "Preencha corretamente os dados, todos os campos são obrigatorios"
+          );
+        }
       });
   }
   return (
