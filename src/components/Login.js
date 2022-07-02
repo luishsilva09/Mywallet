@@ -4,9 +4,11 @@ import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/UserContext";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [load, setLoad] = React.useState(false);
   const { setUserData } = React.useContext(UserContext);
   const [login, setLogin] = React.useState({
     email: "",
@@ -15,10 +17,12 @@ export default function Login() {
 
   function logar(event) {
     event.preventDefault();
+    setLoad(true);
     const promise = axios.post("http://localhost:5000/login", login);
     promise
       .then((res) => {
         setUserData(res.data);
+        setLoad(false);
         navigate("/home");
       })
       .catch(() => {
@@ -33,20 +37,22 @@ export default function Login() {
           type="email"
           placeholder="E-mail"
           value={login.email}
+          disabled={load}
           onChange={(e) => setLogin({ ...login, email: e.target.value })}
         ></input>
         <input
           type="password"
           placeholder="Senha"
           value={login.senha}
+          disabled={load}
           onChange={(e) => setLogin({ ...login, password: e.target.value })}
         ></input>
-        <button type="submit">
-          <p>Entrar</p>
+        <button type="submit" disabled={load}>
+          {load ? <ThreeDots color="#fff" /> : <p>Entrar</p>}
         </button>
       </Form>
       <Link to="/cadastro">
-        <p>Priomeira vez? Cadastre-se!</p>
+        <p>Primeira vez? Cadastre-se!</p>
       </Link>
     </Container>
   );

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { TailSpin } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Cadastro() {
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ export default function Cadastro() {
   });
 
   function createUser(event) {
+    console.log("oii");
     event.preventDefault();
     setLoad(true);
     const promise = axios.post("http://localhost:5000/cadastro", userData);
@@ -37,57 +38,47 @@ export default function Cadastro() {
   }
   return (
     <Container>
-      {load ? (
-        <TailSpin color="#fff" />
-      ) : (
-        <Container>
-          <img src={Logo} alt="logo mywallet" />
-          <Form onSubmit={(event) => createUser(event)}>
-            <input
-              type="text"
-              placeholder="Nome"
-              value={userData.name}
-              disabled={load}
-              onChange={(e) =>
-                setUserData({ ...userData, name: e.target.value })
-              }
-            ></input>
-            <input
-              type="email"
-              placeholder="E-mail"
-              value={userData.email}
-              disabled={load}
-              onChange={(e) =>
-                setUserData({ ...userData, email: e.target.value })
-              }
-            ></input>
-            <input
-              type="password"
-              placeholder="Senha"
-              value={userData.password}
-              disabled={load}
-              onChange={(e) =>
-                setUserData({ ...userData, password: e.target.value })
-              }
-            ></input>
-            <input
-              type="password"
-              placeholder="Confirme a senha"
-              value={userData.repeat_password}
-              disabled={load}
-              onChange={(e) =>
-                setUserData({ ...userData, repeat_password: e.target.value })
-              }
-            ></input>
-            <button type="submit">
-              <p>Cadastrar</p>
-            </button>
-          </Form>
-          <Link to="/">
-            <p>Já tem uma conta? Entre agora!</p>
-          </Link>
-        </Container>
-      )}
+      <img src={Logo} alt="logo mywallet" />
+      <Form onSubmit={(event) => createUser(event)}>
+        <input
+          type="text"
+          placeholder="Nome"
+          value={userData.name}
+          disabled={load}
+          onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+        ></input>
+        <input
+          type="email"
+          placeholder="E-mail"
+          value={userData.email}
+          disabled={load}
+          onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+        ></input>
+        <input
+          type="password"
+          placeholder="Senha"
+          value={userData.password}
+          disabled={load}
+          onChange={(e) =>
+            setUserData({ ...userData, password: e.target.value })
+          }
+        ></input>
+        <input
+          type="password"
+          placeholder="Confirme a senha"
+          value={userData.repeat_password}
+          disabled={load}
+          onChange={(e) =>
+            setUserData({ ...userData, repeat_password: e.target.value })
+          }
+        ></input>
+        <button type="submit" disabled={load}>
+          {load ? <ThreeDots color="#fff" /> : <p>Cadastrar</p>}
+        </button>
+      </Form>
+      <Link to="/">
+        <p>Já tem uma conta? Entre agora!</p>
+      </Link>
     </Container>
   );
 }
@@ -98,7 +89,6 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  flex-wrap: wrap;
 
   p,
   a {
