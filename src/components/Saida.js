@@ -23,7 +23,11 @@ export default function Saida() {
   };
   function novaSaida(event) {
     event.preventDefault();
-    const promise = axios.post("http://localhost:5000/saida", saida, config);
+    const promise = axios.post(
+      "https://back-mywallet-driven.herokuapp.com/saida",
+      saida,
+      config
+    );
     promise.then((res) => {
       navigate("/home");
     });

@@ -15,7 +15,10 @@ export default function Cadastro() {
 
   function cadastrar(event) {
     event.preventDefault();
-    const promise = axios.post("http://localhost:5000/cadastro", cadastro);
+    const promise = axios.post(
+      "https://back-mywallet-driven.herokuapp.com/cadastro",
+      cadastro
+    );
     promise
       .then((req, res) => {
         console.log(res);

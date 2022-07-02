@@ -15,7 +15,10 @@ export default function Login() {
 
   function logar(event) {
     event.preventDefault();
-    const promise = axios.post("http://localhost:5000/login", login);
+    const promise = axios.post(
+      "https://back-mywallet-driven.herokuapp.com/login",
+      login
+    );
     promise
       .then((res) => {
         setUserData(res.data);

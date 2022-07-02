@@ -14,7 +14,10 @@ export default function Extrato() {
     },
   };
   React.useEffect(() => {
-    const promise = axios.get("http://localhost:5000/extrato", config);
+    const promise = axios.get(
+      "https://back-mywallet-driven.herokuapp.com/extrato",
+      config
+    );
     promise.then((res) => {
       setTotal(res.data.total);
       setDados(res.data.dados);
@@ -30,13 +33,18 @@ export default function Extrato() {
         </p>
       ) : (
         <Itens>
-          {dados.map((e) => (
-            <Item>
-              <h2>{e.data}</h2>
-              <h3>{e.descricao}</h3>
-              <Valor color={e.type}>
-                {e.valor.toFixed(2).replace(".", ",")}
-              </Valor>
+          {dados.map((e, index) => (
+            <Item onClick={() => console.log(e._id)} key={index}>
+              <LeftSide>
+                <h2>{e.data}</h2>
+                <h3>{e.descricao}</h3>
+              </LeftSide>
+
+              <RigthSide>
+                <Valor color={e.type}>
+                  {e.valor.toFixed(2).replace(".", ",")}
+                </Valor>
+              </RigthSide>
             </Item>
           ))}
         </Itens>
@@ -73,16 +81,23 @@ const Itens = styled.div`
 `;
 const Item = styled.div`
   display: flex;
+  justify-content: space-between;
   font-size: 16px;
   width: 100%;
+  margin-bottom: 15px;
 
   h2 {
     color: #c6c6c6;
+    margin-right: 10px;
   }
   h3 {
     color: #000;
   }
 `;
+const LeftSide = styled.div`
+  display: flex;
+`;
+const RigthSide = styled.div``;
 const Saldo = styled.div`
   width: 100%;
   display: flex;
@@ -103,7 +118,5 @@ const Total = styled.h2`
   color: ${(props) => (props.color > 0 ? "green" : "red")};
 `;
 const Valor = styled.h4`
-  position: absolute;
-  right: 10px;
   color: ${(props) => (props.color === "entrada" ? "green" : "red")};
 `;
