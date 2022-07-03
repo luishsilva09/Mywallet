@@ -28,7 +28,7 @@ export default function Entrada() {
     event.preventDefault();
     setLoad(true);
     const promise = axios.post(
-      "https://git.heroku.com/back-mywallet-driven.git/entrada",
+      "https://back-mywallet-driven.herokuapp.com/entrada",
       entrada,
       config
     );

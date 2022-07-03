@@ -16,7 +16,7 @@ export default function Extrato() {
   };
   React.useEffect(() => {
     const promise = axios.get(
-      "https://git.heroku.com/back-mywallet-driven.git/extrato",
+      "https://back-mywallet-driven.herokuapp.com/extrato",
       config
     );
     promise.then((res) => {

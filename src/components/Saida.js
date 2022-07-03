@@ -28,7 +28,7 @@ export default function Saida() {
     event.preventDefault();
     setLoad(true);
     const promise = axios.post(
-      "https://git.heroku.com/back-mywallet-driven.git/saida",
+      "https://back-mywallet-driven.herokuapp.com/saida",
       saida,
       config
     );

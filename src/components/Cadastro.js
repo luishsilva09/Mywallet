@@ -19,7 +19,7 @@ export default function Cadastro() {
     event.preventDefault();
     setLoad(true);
     const promise = axios.post(
-      "https://git.heroku.com/back-mywallet-driven.git/cadastro",
+      "https://back-mywallet-driven.herokuapp.com/cadastro",
       userData
     );
     promise

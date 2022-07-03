@@ -20,7 +20,7 @@ export default function Login() {
     event.preventDefault();
     setLoad(true);
     const promise = axios.post(
-      "https://git.heroku.com/back-mywallet-driven.git/login",
+      "https://back-mywallet-driven.herokuapp.com/login",
       login
     );
     promise
