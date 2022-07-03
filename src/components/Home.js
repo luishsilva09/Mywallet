@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
   const { userData } = React.useContext(UserContext);
+
   function entrada() {
     navigate("/entrada");
   }
@@ -19,7 +20,7 @@ export default function Home() {
   return (
     <Container>
       <Topo>
-        <p>Ola, {userData.usuario.name}</p>
+        <p>Olá, {userData.user.name}</p>
         <IoExitOutline onClick={() => navigate("/")} />
       </Topo>
       <Extrato />

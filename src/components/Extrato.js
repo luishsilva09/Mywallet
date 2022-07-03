@@ -17,13 +17,13 @@ export default function Extrato() {
     const promise = axios.get("http://localhost:5000/extrato", config);
     promise.then((res) => {
       setTotal(res.data.total);
-      setDados(res.data.dados);
+      setDados(res.data.userData);
       setLoad(false);
     });
   }, []);
   return (
     <Container>
-      {load ? (
+      {load || dados === undefined || dados.length === 0 ? (
         <p>
           Não há registros de <br />
           entrada ou saída

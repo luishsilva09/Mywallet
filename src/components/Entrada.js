@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import dayjs from "dayjs";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Entrada() {
   const now = dayjs().format("DD/MM");
   const navigate = useNavigate();
+  const [load, setLoad] = React.useState(false);
+  const [invalid, setInvalid] = React.useState(false);
   const [entrada, setEntrada] = React.useState({
     data: now,
     valor: "",
@@ -23,14 +26,21 @@ export default function Entrada() {
   };
   function novaEntrada(event) {
     event.preventDefault();
+    setLoad(true);
     const promise = axios.post(
       "http://localhost:5000/entrada",
       entrada,
       config
     );
-    promise.then((res) => {
-      navigate("/home");
-    });
+    promise
+      .then((res) => {
+        setLoad(false);
+        navigate("/home");
+      })
+      .catch((res) => {
+        setLoad(false);
+        setInvalid(true);
+      });
   }
 
   return (
@@ -43,20 +53,29 @@ export default function Entrada() {
           type="number"
           value={entrada.valor}
           placeholder="Valor"
+          disabled={load}
           onChange={(e) =>
-            setEntrada({ ...entrada, valor: parseInt(e.target.value) })
+            setEntrada({
+              ...entrada,
+              valor: parseFloat(
+                Number(e.target.value.replace(/[^0-9][.]/g, ""))
+              ),
+            })
           }
         ></input>
         <input
           type="text"
           value={entrada.descricao}
           placeholder="Descrição"
+          disabled={load}
           onChange={(e) =>
             setEntrada({ ...entrada, descricao: e.target.value })
           }
         ></input>
-        <button>
-          <p>Salvar entrada</p>
+        {invalid ? <h2>Ex: valor : 30,00 , Descrição: salario</h2> : <></>}
+        <br />
+        <button disabled={load}>
+          {load ? <ThreeDots color="#fff" /> : <p>Salvar entrada</p>}
         </button>
       </Form>
     </Container>
@@ -66,6 +85,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  h2 {
+    font-size: 15px;
+    color: #ff0126;
+    font-weight: 500;
+    text-decoration: none;
+  }
 `;
 const Topo = styled.div`
   font-size: 25px;
