@@ -16,10 +16,12 @@ export default function Cadastro() {
   });
 
   function createUser(event) {
-    console.log("oii");
     event.preventDefault();
     setLoad(true);
-    const promise = axios.post("http://localhost:5000/cadastro", userData);
+    const promise = axios.post(
+      "https://git.heroku.com/back-mywallet-driven.git/cadastro",
+      userData
+    );
     promise
       .then((req, res) => {
         setLoad(false);

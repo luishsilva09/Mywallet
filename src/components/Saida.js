@@ -27,7 +27,11 @@ export default function Saida() {
   function novaSaida(event) {
     event.preventDefault();
     setLoad(true);
-    const promise = axios.post("http://localhost:5000/saida", saida, config);
+    const promise = axios.post(
+      "https://git.heroku.com/back-mywallet-driven.git/saida",
+      saida,
+      config
+    );
     promise
       .then((res) => {
         setLoad(false);
