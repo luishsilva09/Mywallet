@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
+import { TailSpin } from "react-loader-spinner";
 
 export default function Extrato() {
   const [total, setTotal] = React.useState(0);
@@ -21,13 +22,26 @@ export default function Extrato() {
       setLoad(false);
     });
   }, []);
-  return (
-    <Container>
-      {load || dados === undefined || dados.length === 0 ? (
+  function loading() {
+    if (load === true) {
+      return (
+        <Loading>
+          <TailSpin color="#8c11be" />
+        </Loading>
+      );
+    } else {
+      return (
         <p>
           Não há registros de <br />
           entrada ou saída
         </p>
+      );
+    }
+  }
+  return (
+    <Container>
+      {load || dados === undefined || dados.length === 0 ? (
+        loading()
       ) : (
         <Itens>
           {dados.map((e, index) => (
@@ -71,6 +85,14 @@ const Container = styled.div`
     font-size: 20px;
     color: #868686;
   }
+`;
+const Loading = styled.div`
+  height: 445px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const Itens = styled.div`
   height: 400px;
