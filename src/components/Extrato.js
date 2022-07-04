@@ -32,12 +32,17 @@ export default function Extrato() {
   }
 
   function deletetar(_id) {
-    const promise = axios.delete(
-      `https://back-mywallet-driven.herokuapp.com/deletar/${_id}`,
-      config
-    );
-    promise.then((res) => atualizarExtrato());
-    promise.catch((res) => console.log("deu ruim"));
+    const confirm = window.confirm("Deseja mesmo deletar");
+    if (confirm) {
+      setLoad(true);
+      const promise = axios.delete(
+        `https://back-mywallet-driven.herokuapp.com/deletar/${_id}`,
+        config
+      );
+      promise.then((res) => {
+        atualizarExtrato();
+      });
+    }
   }
 
   function loading() {
@@ -63,7 +68,7 @@ export default function Extrato() {
       ) : (
         <Itens>
           {dados.map((e, index) => (
-            <Item onClick={() => console.log(e._id)} key={index}>
+            <Item key={index}>
               <LeftSide>
                 <h2>{e.data}</h2>
                 <h3>{e.descricao}</h3>

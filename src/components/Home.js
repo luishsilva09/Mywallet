@@ -6,41 +6,46 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Login from "./Login";
 
 export default function Home() {
   const navigate = useNavigate();
   const { userData } = React.useContext(UserContext);
 
-  function entrada() {
-    navigate("/entrada");
-  }
-  function saida() {
-    navigate("/saida");
-  }
-  return (
-    <Container>
-      <Topo>
-        <p>Olá, {userData.user.name}</p>
-        <IoExitOutline onClick={() => navigate("/")} />
-      </Topo>
-      <Extrato />
+  if (!userData) {
+    window.location.assign("https://mywallet-front-ecru.vercel.app/");
+  } else {
+    function entrada() {
+      navigate("/entrada");
+    }
+    function saida() {
+      navigate("/saida");
+    }
+    return (
+      <Container>
+        <Topo>
+          <p>Olá, {userData.user.name}</p>
+          <IoExitOutline onClick={() => navigate("/")} />
+        </Topo>
+        <Extrato />
 
-      <Botton>
-        <Adicionar onClick={() => entrada()}>
-          <AiOutlinePlusCircle size={20} color="#fff" />
-          <h2>
-            Nova <br /> entrada
-          </h2>
-        </Adicionar>
-        <Adicionar onClick={() => saida()}>
-          <AiOutlineMinusCircle size={20} color="#fff" />
-          <h2>
-            Nova <br /> saída
-          </h2>
-        </Adicionar>
-      </Botton>
-    </Container>
-  );
+        <Botton>
+          <Add onClick={() => entrada()}>
+            <AiOutlinePlusCircle size={20} color="#fff" />
+            <h2>
+              Nova <br /> entrada
+            </h2>
+          </Add>
+          <Add onClick={() => saida()}>
+            <AiOutlineMinusCircle size={20} color="#fff" />
+            <h2>
+              Nova <br /> saída
+            </h2>
+          </Add>
+        </Botton>
+      </Container>
+    );
+  }
 }
 
 const Container = styled.div`
@@ -58,7 +63,7 @@ const Topo = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const Adicionar = styled.div`
+const Add = styled.div`
   width: 155px;
   height: 114px;
   background-color: #a328d6;
