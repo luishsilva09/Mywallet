@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import { TailSpin } from "react-loader-spinner";
+import { IoClose } from "react-icons/io5";
 
 export default function Extrato() {
   const [total, setTotal] = React.useState(0);
@@ -15,6 +16,10 @@ export default function Extrato() {
     },
   };
   React.useEffect(() => {
+    atualizarExtrato();
+  }, []);
+
+  function atualizarExtrato() {
     const promise = axios.get(
       "https://back-mywallet-driven.herokuapp.com/extrato",
       config
@@ -24,7 +29,17 @@ export default function Extrato() {
       setDados(res.data.userData);
       setLoad(false);
     });
-  }, []);
+  }
+
+  function deletetar(_id) {
+    const promise = axios.delete(
+      `https://back-mywallet-driven.herokuapp.com/deletar/:${_id}`,
+      config
+    );
+    promise.then((res) => atualizarExtrato());
+    promise.catch((res) => console.log("deu ruim"));
+  }
+
   function loading() {
     if (load === true) {
       return (
@@ -58,6 +73,7 @@ export default function Extrato() {
                 <Valor color={e.type}>
                   {e.valor.toFixed(2).replace(".", ",")}
                 </Valor>
+                <IoClose onClick={() => deletetar(e._id)} color=" #c6c6c6" />
               </RigthSide>
             </Item>
           ))}
@@ -119,7 +135,9 @@ const Item = styled.div`
 const LeftSide = styled.div`
   display: flex;
 `;
-const RigthSide = styled.div``;
+const RigthSide = styled.div`
+  display: flex;
+`;
 const Saldo = styled.div`
   width: 100%;
   display: flex;
