@@ -13,6 +13,7 @@ export default function Home() {
   const { userData } = React.useContext(UserContext);
 
   if (!userData) {
+    alert("Conexao perdita, entre novamente");
     window.location.assign("https://mywallet-front-ecru.vercel.app/");
   } else {
     function entrada() {
