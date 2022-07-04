@@ -14,7 +14,7 @@ export default function Home() {
 
   if (!userData) {
     alert("Conexao perdita, entre novamente");
-    window.location.assign("https://mywallet-front-ecru.vercel.app/");
+    window.location.replace("https://mywallet-front-ecru.vercel.app/");
   } else {
     function entrada() {
       navigate("/entrada");
