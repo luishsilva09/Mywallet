@@ -18,7 +18,10 @@ export default function Entrada() {
     type: "entrada",
   });
   const { userData } = React.useContext(UserContext);
-
+  if (!userData) {
+    alert("Conexao perdita, entre novamente");
+    window.location.replace("https://mywallet-front-ecru.vercel.app/");
+  }
   const config = {
     headers: {
       Authorization: `Bearer ${userData.token}`,
