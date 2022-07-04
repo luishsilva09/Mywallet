@@ -33,7 +33,7 @@ export default function Extrato() {
 
   function deletetar(_id) {
     const promise = axios.delete(
-      `https://back-mywallet-driven.herokuapp.com/deletar/:${_id}`,
+      `https://back-mywallet-driven.herokuapp.com/deletar/${_id}`,
       config
     );
     promise.then((res) => atualizarExtrato());
