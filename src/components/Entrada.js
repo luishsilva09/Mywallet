@@ -57,9 +57,7 @@ export default function Entrada() {
           onChange={(e) =>
             setEntrada({
               ...entrada,
-              valor: parseFloat(
-                Number(e.target.value.replace(/[^0-9][.]/g, ""))
-              ),
+              valor: parseFloat(Math.abs(e.target.value).toFixed(2)),
             })
           }
         ></input>

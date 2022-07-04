@@ -56,9 +56,7 @@ export default function Saida() {
           onChange={(e) =>
             setSaida({
               ...saida,
-              valor: parseFloat(
-                Number(e.target.value.replace(/[^0-9][.]/g, ""))
-              ),
+              valor: parseFloat(Math.abs(e.target.value).toFixed(2)),
             })
           }
         ></input>
