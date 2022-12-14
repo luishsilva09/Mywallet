@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import { TailSpin } from "react-loader-spinner";
 import { IoClose } from "react-icons/io5";
+import api from "./service/api";
 
 export default function Extrato() {
   const [total, setTotal] = React.useState(0);
@@ -19,27 +20,19 @@ export default function Extrato() {
     atualizarExtrato();
   }, []);
 
-  function atualizarExtrato() {
-    const promise = axios.get(
-      "https://back-mywallet-driven.herokuapp.com/extrato",
-      config
-    );
-    promise.then((res) => {
+  async function atualizarExtrato() {
+    await api.get("/extrato", config).then((res) => {
       setTotal(res.data.total);
       setDados(res.data.userData);
       setLoad(false);
     });
   }
 
-  function deletetar(_id) {
+  async function deletetar(_id) {
     const confirm = window.confirm("Deseja mesmo deletar");
     if (confirm) {
       setLoad(true);
-      const promise = axios.delete(
-        `https://back-mywallet-driven.herokuapp.com/deletar/${_id}`,
-        config
-      );
-      promise.then((res) => {
+      await api.delete(`/deletar/${_id}`, config).then((res) => {
         atualizarExtrato();
       });
     }

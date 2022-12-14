@@ -5,6 +5,7 @@ import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import dayjs from "dayjs";
 import { ThreeDots } from "react-loader-spinner";
+import api from "./service/api";
 
 export default function Saida() {
   const now = dayjs().format("DD/MM");
@@ -20,22 +21,18 @@ export default function Saida() {
   const { userData } = React.useContext(UserContext);
   if (!userData) {
     alert("Conexao perdita, entre novamente");
-    window.location.replace("https://mywallet-front-ecru.vercel.app/");
+    // window.location.replace("https://mywallet-front-ecru.vercel.app/");
   }
   const config = {
     headers: {
       Authorization: `Bearer ${userData.token}`,
     },
   };
-  function novaSaida(event) {
+  async function novaSaida(event) {
     event.preventDefault();
     setLoad(true);
-    const promise = axios.post(
-      "https://back-mywallet-driven.herokuapp.com/saida",
-      saida,
-      config
-    );
-    promise
+    await api
+      .post("/saida", saida, config)
       .then((res) => {
         setLoad(false);
         navigate("/home");

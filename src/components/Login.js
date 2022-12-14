@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
+import api from "./service/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,14 +17,11 @@ export default function Login() {
     password: "",
   });
 
-  function logar(event) {
+  async function logar(event) {
     event.preventDefault();
     setLoad(true);
-    const promise = axios.post(
-      "https://back-mywallet-driven.herokuapp.com/login",
-      login
-    );
-    promise
+    await api
+      .post("/login", login)
       .then((res) => {
         setUserData(res.data);
         setLoad(false);
