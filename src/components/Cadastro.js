@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import api from "./service/api";
 
 export default function Cadastro() {
   const navigate = useNavigate();
@@ -15,14 +15,11 @@ export default function Cadastro() {
     repeat_password: "",
   });
 
-  function createUser(event) {
+  async function createUser(event) {
     event.preventDefault();
     setLoad(true);
-    const promise = axios.post(
-      "https://back-mywallet-driven.herokuapp.com/cadastro",
-      userData
-    );
-    promise
+    await api
+      .post("/cadastro", userData)
       .then((req, res) => {
         setLoad(false);
         navigate("/");
@@ -30,7 +27,7 @@ export default function Cadastro() {
       .catch((res) => {
         setLoad(false);
         if (res.response.status === 409) {
-          alert("Email já cadastrado");
+          alert("Email ou senha invalidos");
         } else {
           alert(
             "Preencha corretamente os dados, todos os campos são obrigatorios"
