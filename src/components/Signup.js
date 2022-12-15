@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,8 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 export default function Signup() {
   const navigate = useNavigate();
   const _DELAY = 1000;
-  const [load, setLoad] = React.useState(false);
-  const [userData, setUserData] = React.useState({
+  const [load, setLoad] = useState(false);
+  const [userData, setUserData] = useState({
     name: "",
     email: "",
     password: "",

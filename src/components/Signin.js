@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,21 +6,21 @@ import UserContext from "../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
 
-export default function Login() {
+export default function Signin() {
   const navigate = useNavigate();
-  const [load, setLoad] = React.useState(false);
-  const [invalidUser, setInvalidUser] = React.useState(false);
-  const { setUserData } = React.useContext(UserContext);
-  const [login, setLogin] = React.useState({
+  const [load, setLoad] = useState(false);
+  const [invalidUser, setInvalidUser] = useState(false);
+  const { setUserData } = useContext(UserContext);
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  async function logar(event) {
+  async function login(event) {
     event.preventDefault();
     setLoad(true);
     await api
-      .post("/login", login)
+      .post("/signin", loginData)
       .then((res) => {
         setUserData(res.data);
         setLoad(false);
@@ -34,21 +34,25 @@ export default function Login() {
 
   return (
     <Container>
-      <img src={Logo} alt="logo mywallet" />
-      <Form onSubmit={(event) => logar(event)}>
+      <img src={Logo} alt="mywallet" />
+      <Form onSubmit={(event) => login(event)}>
         <input
           type="email"
           placeholder="E-mail"
-          value={login.email}
+          value={loginData.email}
           disabled={load}
-          onChange={(e) => setLogin({ ...login, email: e.target.value })}
+          onChange={(e) =>
+            setLoginData({ ...loginData, email: e.target.value })
+          }
         ></input>
         <input
           type="password"
           placeholder="Senha"
-          value={login.senha}
+          value={loginData.senha}
           disabled={load}
-          onChange={(e) => setLogin({ ...login, password: e.target.value })}
+          onChange={(e) =>
+            setLoginData({ ...loginData, password: e.target.value })
+          }
         ></input>
         <button type="submit" disabled={load}>
           {load ? <ThreeDots color="#fff" /> : <p>Entrar</p>}

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
-import Login from "./Login";
+import Signin from "./Signin";
 import Signup from "./Signup";
 import Entrada from "./Entrada";
 import Saida from "./Saida";
@@ -16,7 +16,7 @@ export default function App() {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Signin />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/saida" element={<Saida />} />
