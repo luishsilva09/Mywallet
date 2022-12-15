@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import UserContext from "../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
@@ -57,7 +56,7 @@ export default function Login() {
       </Form>
       {invalidUser ? <h2>Email ou senha invalidos</h2> : <></>}
       <br />
-      <Link to="/cadastro">
+      <Link to="/signup">
         <p>Primeira vez? Cadastre-se!</p>
       </Link>
     </Container>

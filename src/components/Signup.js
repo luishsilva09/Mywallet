@@ -4,9 +4,11 @@ import Logo from "../assets/MyWallet.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Cadastro() {
+export default function Signup() {
   const navigate = useNavigate();
+  const _DELAY = 1000;
   const [load, setLoad] = React.useState(false);
   const [userData, setUserData] = React.useState({
     name: "",
@@ -19,25 +21,25 @@ export default function Cadastro() {
     event.preventDefault();
     setLoad(true);
     await api
-      .post("/cadastro", userData)
+      .post("/signup", userData)
       .then((req, res) => {
         setLoad(false);
-        navigate("/");
+        toast.success("Cadastro feito com sucesso!");
+        setTimeout(() => navigate("/"), _DELAY);
       })
       .catch((res) => {
         setLoad(false);
         if (res.response.status === 409) {
-          alert("Email ou senha invalidos");
+          toast.error("Email ou senha invalidos");
         } else {
-          alert(
-            "Preencha corretamente os dados, todos os campos são obrigatorios"
-          );
+          toast.error("Preencha corretamente os campos");
         }
       });
   }
   return (
     <Container>
       <img src={Logo} alt="logo mywallet" />
+      <ToastContainer theme="colored" />
       <Form onSubmit={(event) => createUser(event)}>
         <input
           type="text"

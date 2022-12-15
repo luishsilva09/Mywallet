@@ -6,7 +6,6 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import Login from "./Login";
 
 export default function Home() {
   const navigate = useNavigate();
