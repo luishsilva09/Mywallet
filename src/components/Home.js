@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Extrato from "./Extrato";
+import Statement from "./Statement";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
@@ -28,7 +28,7 @@ export default function Home() {
           <p>Olá, {userData.user.name}</p>
           <IoExitOutline onClick={() => navigate("/")} />
         </Topo>
-        <Extrato />
+        <Statement />
 
         <Botton>
           <Add onClick={() => entrada()}>

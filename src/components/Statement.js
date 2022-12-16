@@ -1,38 +1,38 @@
-import React from "react";
+import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import { TailSpin } from "react-loader-spinner";
 import { IoClose } from "react-icons/io5";
 import api from "./service/api";
 
-export default function Extrato() {
-  const [total, setTotal] = React.useState(0);
-  const [dados, setDados] = React.useState();
-  const [load, setLoad] = React.useState(true);
-  const { userData } = React.useContext(UserContext);
+export default function Statement() {
+  const [total, setTotal] = useState(0);
+  const [statementData, setStatementData] = useState();
+  const [load, setLoad] = useState(true);
+  const { userData } = useContext(UserContext);
   const config = {
     headers: {
       Authorization: `Bearer ${userData.token}`,
     },
   };
-  React.useEffect(() => {
-    atualizarExtrato();
+  useEffect(() => {
+    reloadStatement();
   }, []);
 
-  async function atualizarExtrato() {
-    await api.get("/extrato", config).then((res) => {
+  async function reloadStatement() {
+    await api.get("/statement", config).then((res) => {
       setTotal(res.data.total);
-      setDados(res.data.userData);
+      setStatementData(res.data.userData);
       setLoad(false);
     });
   }
 
-  async function deletetar(_id) {
+  async function deleteExpenses(_id) {
     const confirm = window.confirm("Deseja mesmo deletar");
     if (confirm) {
       setLoad(true);
-      await api.delete(`/deletar/${_id}`, config).then((res) => {
-        atualizarExtrato();
+      await api.delete(`/deleteStatement/${_id}`, config).then((res) => {
+        reloadStatement();
       });
     }
   }
@@ -55,11 +55,11 @@ export default function Extrato() {
   }
   return (
     <Container>
-      {load || dados === undefined || dados.length === 0 ? (
+      {load || statementData === undefined || statementData.length === 0 ? (
         loading()
       ) : (
         <Itens>
-          {dados.map((e, index) => (
+          {statementData.map((e, index) => (
             <Item key={index}>
               <LeftSide>
                 <h2>{e.data}</h2>
@@ -70,7 +70,10 @@ export default function Extrato() {
                 <Valor color={e.type}>
                   {e.valor.toFixed(2).replace(".", ",")}
                 </Valor>
-                <IoClose onClick={() => deletetar(e._id)} color=" #c6c6c6" />
+                <IoClose
+                  onClick={() => deleteExpenses(e._id)}
+                  color=" #c6c6c6"
+                />
               </RigthSide>
             </Item>
           ))}
