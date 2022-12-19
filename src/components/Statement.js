@@ -2,8 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
 import { TailSpin } from "react-loader-spinner";
-import { IoClose } from "react-icons/io5";
 import api from "./service/api";
+import { ItemType } from "./ItemType";
 
 export default function Statement() {
   const [total, setTotal] = useState(0);
@@ -27,16 +27,6 @@ export default function Statement() {
     });
   }
 
-  async function deleteExpenses(_id) {
-    const confirm = window.confirm("Deseja mesmo deletar");
-    if (confirm) {
-      setLoad(true);
-      await api.delete(`/deleteStatement/${_id}`, config).then((res) => {
-        reloadStatement();
-      });
-    }
-  }
-
   function loading() {
     if (load === true) {
       return (
@@ -54,36 +44,27 @@ export default function Statement() {
     }
   }
   return (
-    <Container>
-      {load || statementData === undefined || statementData.length === 0 ? (
-        loading()
-      ) : (
-        <Itens>
-          {statementData.map((e, index) => (
-            <Item key={index}>
-              <LeftSide>
-                <h2>{e.data}</h2>
-                <h3>{e.descricao}</h3>
-              </LeftSide>
-
-              <RigthSide>
-                <Valor color={e.type}>
-                  {e.valor.toFixed(2).replace(".", ",")}
-                </Valor>
-                <IoClose
-                  onClick={() => deleteExpenses(e._id)}
-                  color=" #c6c6c6"
-                />
-              </RigthSide>
-            </Item>
-          ))}
-        </Itens>
-      )}
-      <Saldo>
-        <h1>SALDO</h1>
-        <Total color={total}>{total.toFixed(2).replace(".", ",")}</Total>
-      </Saldo>
-    </Container>
+    <>
+      <Container>
+        {load || statementData === undefined || statementData.length === 0 ? (
+          loading()
+        ) : (
+          <Itens>
+            {statementData.map((e, index) => (
+              <ItemType
+                index={index}
+                element={e}
+                reloadStatement={reloadStatement}
+              />
+            ))}
+          </Itens>
+        )}
+        <Saldo>
+          <h1>SALDO</h1>
+          <Total color={total}>{total.toFixed(2).replace(".", ",")}</Total>
+        </Saldo>
+      </Container>
+    </>
   );
 }
 
@@ -117,27 +98,6 @@ const Itens = styled.div`
   height: 400px;
   overflow: scroll;
 `;
-const Item = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-  width: 100%;
-  margin-bottom: 15px;
-
-  h2 {
-    color: #c6c6c6;
-    margin-right: 10px;
-  }
-  h3 {
-    color: #000;
-  }
-`;
-const LeftSide = styled.div`
-  display: flex;
-`;
-const RigthSide = styled.div`
-  display: flex;
-`;
 const Saldo = styled.div`
   width: 100%;
   display: flex;
@@ -156,7 +116,4 @@ const Saldo = styled.div`
 const Total = styled.h2`
   font-weight: 400;
   color: ${(props) => (props.color > 0 ? "green" : "red")};
-`;
-const Valor = styled.h4`
-  color: ${(props) => (props.color === "entrada" ? "green" : "red")};
 `;
