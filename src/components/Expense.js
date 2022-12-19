@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../context/UserContext";
@@ -7,18 +7,18 @@ import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
 import { LostConnection } from "./utils/LostConnection";
 
-export default function Saida() {
+export default function Expense() {
   const now = dayjs().format("DD/MM");
   const navigate = useNavigate();
-  const [load, setLoad] = React.useState(false);
-  const [invalid, setInvalid] = React.useState(false);
-  const [saida, setSaida] = React.useState({
+  const [load, setLoad] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [saida, setSaida] = useState({
     data: now,
     valor: "",
     descricao: "",
     type: "saida",
   });
-  const { userData } = React.useContext(UserContext);
+  const { userData } = useContext(UserContext);
   if (!userData) {
     return <LostConnection />;
   }
@@ -27,11 +27,11 @@ export default function Saida() {
       Authorization: `Bearer ${userData.token}`,
     },
   };
-  async function novaSaida(event) {
+  async function newExpense(event) {
     event.preventDefault();
     setLoad(true);
     await api
-      .post("/saida", saida, config)
+      .post("/expense", saida, config)
       .then((res) => {
         setLoad(false);
         navigate("/home");
@@ -46,7 +46,7 @@ export default function Saida() {
       <Topo>
         <p>Nova saida</p>
       </Topo>
-      <Form onSubmit={(event) => novaSaida(event)}>
+      <Form onSubmit={(event) => newExpense(event)}>
         <input
           type="number"
           value={saida.valor}

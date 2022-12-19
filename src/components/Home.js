@@ -15,8 +15,8 @@ export default function Home() {
   function entrada() {
     navigate("/entrada");
   }
-  function saida() {
-    navigate("/saida");
+  function expense() {
+    navigate("/expense");
   }
 
   return (
@@ -37,7 +37,7 @@ export default function Home() {
                   Nova <br /> entrada
                 </h2>
               </Add>
-              <Add onClick={() => saida()}>
+              <Add onClick={() => expense()}>
                 <AiOutlineMinusCircle size={20} color="#fff" />
                 <h2>
                   Nova <br /> saída

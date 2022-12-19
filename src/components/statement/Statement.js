@@ -55,6 +55,7 @@ export default function Statement() {
                 index={index}
                 element={e}
                 reloadStatement={reloadStatement}
+                key={index}
               />
             ))}
           </Itens>
