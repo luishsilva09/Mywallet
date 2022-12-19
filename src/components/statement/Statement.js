@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import UserContext from "../context/UserContext";
+import UserContext from "../../context/UserContext";
 import { TailSpin } from "react-loader-spinner";
-import api from "./service/api";
+import api from "../service/api";
 import { ItemType } from "./ItemType";
 
 export default function Statement() {

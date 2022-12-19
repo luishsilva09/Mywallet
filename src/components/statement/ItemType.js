@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
-import ConfirmDelete from "./modal/ConfirmDelete";
+import ConfirmDelete from "../modal/ConfirmDelete";
 
 export function ItemType({ index, element, reloadStatement }) {
   const [openModal, setOpenModal] = useState(false);

@@ -1,52 +1,56 @@
 import React from "react";
 import styled from "styled-components";
-import Statement from "./Statement";
+import Statement from "./statement/Statement";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { LostConnection } from "./utils/LostConnection";
 
 export default function Home() {
   const navigate = useNavigate();
   const { userData } = React.useContext(UserContext);
 
-  if (!userData) {
-    alert("Conexao perdita, entre novamente");
-    // window.location.replace("https://mywallet-front-ecru.vercel.app/");
-    navigate("/");
-  } else {
-    function entrada() {
-      navigate("/entrada");
-    }
-    function saida() {
-      navigate("/saida");
-    }
-    return (
-      <Container>
-        <Topo>
-          <p>Olá, {userData.user.name}</p>
-          <IoExitOutline onClick={() => navigate("/")} />
-        </Topo>
-        <Statement />
-
-        <Botton>
-          <Add onClick={() => entrada()}>
-            <AiOutlinePlusCircle size={20} color="#fff" />
-            <h2>
-              Nova <br /> entrada
-            </h2>
-          </Add>
-          <Add onClick={() => saida()}>
-            <AiOutlineMinusCircle size={20} color="#fff" />
-            <h2>
-              Nova <br /> saída
-            </h2>
-          </Add>
-        </Botton>
-      </Container>
-    );
+  function entrada() {
+    navigate("/entrada");
   }
+  function saida() {
+    navigate("/saida");
+  }
+
+  return (
+    <>
+      {userData ? (
+        <>
+          <Container>
+            <Topo>
+              <p>Olá, {userData.user.name}</p>
+              <IoExitOutline onClick={() => navigate("/")} />
+            </Topo>
+            <Statement />
+
+            <Botton>
+              <Add onClick={() => entrada()}>
+                <AiOutlinePlusCircle size={20} color="#fff" />
+                <h2>
+                  Nova <br /> entrada
+                </h2>
+              </Add>
+              <Add onClick={() => saida()}>
+                <AiOutlineMinusCircle size={20} color="#fff" />
+                <h2>
+                  Nova <br /> saída
+                </h2>
+              </Add>
+            </Botton>
+          </Container>
+        </>
+      ) : (
+        <LostConnection />
+      )}
+    </>
+  );
 }
 
 const Container = styled.div`

@@ -5,6 +5,7 @@ import UserContext from "../context/UserContext";
 import dayjs from "dayjs";
 import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
+import { LostConnection } from "./utils/LostConnection";
 
 export default function Saida() {
   const now = dayjs().format("DD/MM");
@@ -19,8 +20,7 @@ export default function Saida() {
   });
   const { userData } = React.useContext(UserContext);
   if (!userData) {
-    alert("Conexao perdita, entre novamente");
-    // window.location.replace("https://mywallet-front-ecru.vercel.app/");
+    return <LostConnection />;
   }
   const config = {
     headers: {
