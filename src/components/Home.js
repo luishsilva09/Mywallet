@@ -13,7 +13,7 @@ export default function Home() {
   const { userData } = React.useContext(UserContext);
 
   function entrada() {
-    navigate("/entrada");
+    navigate("/deposit");
   }
   function expense() {
     navigate("/expense");

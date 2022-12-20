@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import api from "./service/api";
 import { LostConnection } from "./utils/LostConnection";
 
-export default function Entrada() {
+export default function Deposit() {
   const now = dayjs().format("DD/MM");
   const navigate = useNavigate();
   const [load, setLoad] = React.useState(false);
@@ -27,11 +27,11 @@ export default function Entrada() {
       Authorization: `Bearer ${userData.token}`,
     },
   };
-  async function novaEntrada(event) {
+  async function newDeposit(event) {
     event.preventDefault();
     setLoad(true);
     await api
-      .post("/entrada", entrada, config)
+      .post("/deposit", entrada, config)
       .then((res) => {
         setLoad(false);
         navigate("/home");
@@ -47,7 +47,7 @@ export default function Entrada() {
       <Topo>
         <p>Nova entrada</p>
       </Topo>
-      <Form onSubmit={(event) => novaEntrada(event)}>
+      <Form onSubmit={(event) => newDeposit(event)}>
         <input
           type="number"
           value={entrada.valor}

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Signin from "./Signin";
 import Signup from "./Signup";
-import Entrada from "./Entrada";
+import Deposit from "./Deposit";
 import Expense from "./Expense";
 import GlobalStyle from "./globalStyles";
 import UserContext from "../context/UserContext";
@@ -20,7 +20,7 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/expense" element={<Expense />} />
-          <Route path="/entrada" element={<Entrada />} />
+          <Route path="/deposit" element={<Deposit />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
