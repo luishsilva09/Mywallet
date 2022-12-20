@@ -21,7 +21,7 @@ export function ItemType({ index, element, reloadStatement }) {
           <Valor color={element.type}>
             {element.valor.toFixed(2).replace(".", ",")}
           </Valor>
-          <IoClose onClick={() => handleModal(element._id)} color=" #c6c6c6" />
+          <IoClose className="icon" onClick={() => handleModal(element._id)} />
         </RigthSide>
       </Item>
       {openModal ? (
@@ -43,6 +43,14 @@ const Item = styled.div`
   font-size: 16px;
   width: 100%;
   margin-bottom: 15px;
+
+  .icon {
+    color: #c6c6c6;
+    &:hover {
+      cursor: pointer;
+      filter: brightness(10%);
+    }
+  }
 
   h2 {
     color: #c6c6c6;
