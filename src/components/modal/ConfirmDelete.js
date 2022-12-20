@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import api from "../service/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import UserContext from "../../context/UserContext";
 import { useContext } from "react";
 
